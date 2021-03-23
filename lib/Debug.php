@@ -68,6 +68,11 @@ class Debug
      */
     public function setFile(string $file): self
     {
+        if (static::isStatic()) {
+            static::init()->setFile($file);
+            return;
+        }
+
         $this->file = $file;
         return $this;
     }
@@ -77,6 +82,11 @@ class Debug
      */
     public function getFile(): ?string
     {
+        if (static::isStatic()) {
+            static::init()->getFile();
+            return;
+        }
+
         if (!$this->file) {
             $this->file = realpath(__DIR__ . '/..') . '/var/php_debugger.log';
         }
@@ -174,6 +184,11 @@ class Debug
      */
     public function writeLn(string $string): void
     {
+        if (static::isStatic()) {
+            static::init()->writeLn($string);
+            return;
+        }
+
         $this->write($string . "\n");
     }
 
@@ -182,6 +197,11 @@ class Debug
      */
     public function write(string $string): void
     {
+        if (static::isStatic()) {
+            static::init()->write($string);
+            return;
+        }
+
         file_put_contents($this->getFile(), $string, FILE_APPEND);
     }
 
