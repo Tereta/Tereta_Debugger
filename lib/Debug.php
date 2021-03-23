@@ -89,6 +89,11 @@ class Debug
      */
     public function trace(?string $label = null)
     {
+        if (static::isStatic()) {
+            static::init()->trace($label);
+            return;
+        }
+
         $string = '';
         if ($label) {
             $string .= $label . " :\n";
@@ -106,8 +111,13 @@ class Debug
      * @param $var
      * @param int $deepArray
      */
-    public function varDump($var, $deepArray = 3): void
+    public function dump($var, $deepArray = 3): void
     {
+        if (static::isStatic()) {
+            static::init()->dump($var, $deepArray);
+            return;
+        }
+
         $this->write("Variable : " . $this->varDumpTransform($var, $deepArray) . "\n");
     }
 
@@ -173,5 +183,13 @@ class Debug
     public function write(string $string): void
     {
         file_put_contents($this->getFile(), $string, FILE_APPEND);
+    }
+
+    /**
+     * @return bool
+     */
+    protected static function isStatic() {
+        $backtrace = debug_backtrace();
+        return $backtrace[1]['type'] == '::';
     }
 }
