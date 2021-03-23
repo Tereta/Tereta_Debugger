@@ -78,7 +78,7 @@ class Debug
     public function getFile(): ?string
     {
         if (!$this->file) {
-            $this->file = '/tmp/php_debugger.log';
+            $this->file = realpath(__DIR__ . '/..') . '/var/php_debugger.log';
         }
 
         return $this->file;
