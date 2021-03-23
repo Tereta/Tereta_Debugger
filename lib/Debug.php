@@ -69,8 +69,7 @@ class Debug
     public function setFile(string $file): self
     {
         if (static::isStatic()) {
-            static::init()->setFile($file);
-            return;
+            return static::init()->setFile($file);
         }
 
         $this->file = $file;
@@ -83,8 +82,7 @@ class Debug
     public function getFile(): ?string
     {
         if (static::isStatic()) {
-            static::init()->getFile();
-            return;
+            return static::init()->getFile();
         }
 
         if (!$this->file) {
@@ -97,7 +95,7 @@ class Debug
     /**
      * @param string|null $label
      */
-    public function trace(?string $label = null)
+    public function trace(?string $label = null): void
     {
         if (static::isStatic()) {
             static::init()->trace($label);
@@ -208,7 +206,8 @@ class Debug
     /**
      * @return bool
      */
-    protected static function isStatic() {
+    protected static function isStatic(): bool
+    {
         $backtrace = debug_backtrace();
         return $backtrace[1]['type'] == '::';
     }
