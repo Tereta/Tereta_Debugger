@@ -126,13 +126,13 @@ class Debug
                 'request_uri',
                 'request_method',
                 'post_data',
-                'home_dir',
+                'document_root',
                 'script_file_name'
             ];
         }
 
-        if (in_array('home_dir', $params) && isset($_SERVER['HOME'])) {
-            $string .= 'Home dir : ' . $_SERVER['HOME'] . "\n";
+        if (in_array('document_root', $params) && isset($_SERVER['DOCUMENT_ROOT'])) {
+            $string .= 'Document root : ' . $_SERVER['DOCUMENT_ROOT'] . "\n";
         }
 
         if (in_array('script_file_name', $params) && isset($_SERVER['SCRIPT_FILENAME'])) {
@@ -146,7 +146,7 @@ class Debug
         if (in_array('request_method', $params) && isset($_SERVER['REQUEST_METHOD'])) {
             $string .= 'Request method : ' . $_SERVER['REQUEST_METHOD'] . "\n";
         }
-var_dump($_SERVER);
+
         if (in_array('post_data', $params) && $_POST) {
             $string .= "Request POST data : \n" . json_encode($_POST, JSON_PRETTY_PRINT) . "\n";
         }
