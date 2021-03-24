@@ -131,7 +131,7 @@ class Debug
             ];
         }
 
-        if (in_array('document_root', $params) && isset($_SERVER['DOCUMENT_ROOT'])) {
+        if (in_array('document_root', $params) && isset($_SERVER['DOCUMENT_ROOT']) && $_SERVER['DOCUMENT_ROOT']) {
             $string .= 'Document root : ' . $_SERVER['DOCUMENT_ROOT'] . "\n";
         }
 
