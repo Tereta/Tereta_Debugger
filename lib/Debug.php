@@ -146,7 +146,7 @@ class Debug
         if (in_array('request_method', $params) && isset($_SERVER['REQUEST_METHOD'])) {
             $string .= 'Request method : ' . $_SERVER['REQUEST_METHOD'] . "\n";
         }
-var_dump($_SERVER);
+
         if (in_array('post_data', $params) && $_POST) {
             $string .= "Request POST data : \n" . json_encode($_POST, JSON_PRETTY_PRINT) . "\n";
         }
