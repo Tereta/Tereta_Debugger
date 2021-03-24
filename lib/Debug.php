@@ -37,6 +37,8 @@ namespace Tereta;
 use Exception;
 
 /**
+ * Tereta\Debug
+ *
  * Class Debug
  */
 class Debug
@@ -109,6 +111,47 @@ class Debug
     public function dump($var, $deepArray = 3): void
     {
         $this->write("Variable : " . $this->varDumpTransform($var, $deepArray) . "\n");
+    }
+
+    /**
+     * @param array $params
+     * @return string
+     */
+    public function info(array $params = []): void
+    {
+        $string = "";
+
+        if (!$params) {
+            $params = [
+                'request_uri',
+                'request_method',
+                'post_data',
+                'home_dir',
+                'script_file_name'
+            ];
+        }
+
+        if (in_array('home_dir', $params) && isset($_SERVER['HOME'])) {
+            $string .= 'Home dir : ' . $_SERVER['HOME'] . "\n";
+        }
+
+        if (in_array('script_file_name', $params) && isset($_SERVER['SCRIPT_FILENAME'])) {
+            $string .= 'Script file name : ' . $_SERVER['SCRIPT_FILENAME'] . "\n";
+        }
+
+        if (in_array('request_uri', $params) && isset($_SERVER['REQUEST_URI'])) {
+            $string .= 'Request URI : ' . $_SERVER['REQUEST_URI'] . "\n";
+        }
+
+        if (in_array('request_method', $params) && isset($_SERVER['REQUEST_METHOD'])) {
+            $string .= 'Request method : ' . $_SERVER['REQUEST_METHOD'] . "\n";
+        }
+var_dump($_SERVER);
+        if (in_array('post_data', $params) && $_POST) {
+            $string .= "Request POST data : \n" . json_encode($_POST, JSON_PRETTY_PRINT) . "\n";
+        }
+
+        $this->write("Info :\n" . $string);
     }
 
     /**
