@@ -68,10 +68,6 @@ class Debug
      */
     public function setFile(string $file): self
     {
-        if (static::isStatic()) {
-            return static::init()->setFile($file);
-        }
-
         $this->file = $file;
         return $this;
     }
@@ -81,10 +77,6 @@ class Debug
      */
     public function getFile(): ?string
     {
-        if (static::isStatic()) {
-            return static::init()->getFile();
-        }
-
         if (!$this->file) {
             $this->file = realpath(__DIR__ . '/..') . '/var/php_debugger.log';
         }
@@ -97,11 +89,6 @@ class Debug
      */
     public function trace(?string $label = null): void
     {
-        if (static::isStatic()) {
-            static::init()->trace($label);
-            return;
-        }
-
         $string = '';
         if ($label) {
             $string .= $label . " :\n";
@@ -121,11 +108,6 @@ class Debug
      */
     public function dump($var, $deepArray = 3): void
     {
-        if (static::isStatic()) {
-            static::init()->dump($var, $deepArray);
-            return;
-        }
-
         $this->write("Variable : " . $this->varDumpTransform($var, $deepArray) . "\n");
     }
 
@@ -182,11 +164,6 @@ class Debug
      */
     public function writeLn(string $string): void
     {
-        if (static::isStatic()) {
-            static::init()->writeLn($string);
-            return;
-        }
-
         $this->write($string . "\n");
     }
 
@@ -195,20 +172,6 @@ class Debug
      */
     public function write(string $string): void
     {
-        if (static::isStatic()) {
-            static::init()->write($string);
-            return;
-        }
-
         file_put_contents($this->getFile(), $string, FILE_APPEND);
-    }
-
-    /**
-     * @return bool
-     */
-    protected static function isStatic(): bool
-    {
-        $backtrace = debug_backtrace();
-        return $backtrace[1]['type'] == '::';
     }
 }
