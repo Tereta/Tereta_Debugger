@@ -105,6 +105,8 @@ class Debug
     }
 
     /**
+     * \Tereta\Debug::init()->dump($var)
+     *
      * @param $var
      * @param int $deepArray
      * @return string|null
