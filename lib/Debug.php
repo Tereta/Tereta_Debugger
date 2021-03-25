@@ -107,10 +107,13 @@ class Debug
     /**
      * @param $var
      * @param int $deepArray
+     * @return string|null
      */
-    public function dump($var, $deepArray = 3): void
+    public function dump($var, int $deepArray = 3): ?string
     {
-        $this->write("Variable : " . $this->varDumpTransform($var, $deepArray) . "\n");
+        $dumpValue = $this->varDumpTransform($var, $deepArray);
+        $this->write("Variable : " . $dumpValue . "\n");
+        return $dumpValue;
     }
 
     /**
@@ -176,7 +179,7 @@ class Debug
                 if ($deepArray > 0) {
                     $string .= $currentSpaces . 'var : ' . $key . " => ...\n";
                 } else {
-                    $string .= $currentSpaces . 'var : ' . $key . ' => ' . $this->varDumpTransform($item, $deepArray - 1) . "\n";
+                    $string .= $currentSpaces . 'var : ' . $key . ' => ' . $this->varDumpTransform($item, $deepArray - 1, $currentSpaces) . "\n";
                 }
             }
             foreach (get_class_methods($var) as $key => $item) {
