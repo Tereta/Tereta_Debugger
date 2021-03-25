@@ -87,9 +87,12 @@ class Debug
     }
 
     /**
+     * \Tereta\Debug::init()->trace($var)
+     *
      * @param string|null $label
+     * @return string
      */
-    public function trace(?string $label = null): void
+    public function trace(?string $label = null): string
     {
         $string = '';
         if ($label) {
@@ -222,4 +225,9 @@ class Debug
     {
         file_put_contents($this->getFile(), $string, FILE_APPEND);
     }
+}
+
+function Debug()
+{
+    return Debug::init();
 }
