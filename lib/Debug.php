@@ -105,6 +105,7 @@ class Debug
         }
 
         $this->writeLn($string);
+        return $string;
     }
 
     /**
@@ -125,7 +126,7 @@ class Debug
      * @param array $params
      * @return string
      */
-    public function info(array $params = []): void
+    public function info(array $params = []): string
     {
         $string = "";
 
@@ -160,6 +161,7 @@ class Debug
         }
 
         $this->write("Info :\n" . $string);
+        return $string;
     }
 
     /**
